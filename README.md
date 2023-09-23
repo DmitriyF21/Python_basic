@@ -1,1 +1,1 @@
-#Python Basic Homeworks - большой текст
+# Python Basic Homeworks 
