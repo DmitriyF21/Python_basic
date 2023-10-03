@@ -1,15 +1,15 @@
-class Cat():
-    def __init__(self,breed,color,age):
-        self.breed=breed
-        self.color=color
-        self.age=age
+class User:
+    def __init__(self, name, age, skill, access):
+        self.name = name
+        self._age = age
+        self.skill=skill
+        self.access=access
+    @property
+    def age(self):
+        return self._age
+    @age.setter
+    def age(self, val):
+        self._age = val
 
-    def meow(self):
-        print('Мяу')
-
-    def purr(self):
-        print('Мрр')
-cat1=Cat('Шотландская','Серая','3')
-
-cat1.breed='Сиамская'
-print(cat1.breed)
+c=User(name='Дмитрий', age=22, skill='middle', access='rwx')
+print(c.skill)
