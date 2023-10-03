@@ -1,6 +1,6 @@
-from abc import ABC
 
-class Vehicle(abc):
+
+class Vehicle:
     pass
 
     def __init__(self, weight=None, started=None, fuel=None, fuel_consumption=None):
