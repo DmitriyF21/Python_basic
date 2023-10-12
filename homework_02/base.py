@@ -1,12 +1,11 @@
 from homework_02.exceptions import LowFuelError, NotEnoughFuel
 class Vehicle:
-    pass
-
-    def __init__(self, weight=None, started=False, fuel=None, fuel_consumption=None):
+    def __init__(self, weight=0, fuel=0, fuel_consumption=0):
         self.weight = weight
-        self.started = started
+        self.started = False
         self.fuel = fuel
         self.fuel_consumption = fuel_consumption
+
 
     def start(self):
         try:
@@ -30,7 +29,7 @@ class Vehicle:
             print('Нет топлива')
 
 
-car = Vehicle('1500', started=False, fuel=50, fuel_consumption=10)
+car = Vehicle(weight=1500, fuel=50, fuel_consumption=10)
 car.start()
 car.move(100)
 print(car.started)

@@ -14,6 +14,6 @@ class Car(Vehicle):
         return self.engine
 
 eng = Engine(volume= 2000,pistons= 4)
-car = Car(engine=10,weight=2000, started=False, fuel=150, fuel_consumption=15)
+car = Car(engine=10, weight=2000, started=False, fuel=150, fuel_consumption=15)
 car.set_engine(20)
 print(car)
