@@ -4,7 +4,6 @@
 - NotEnoughFuel
 - CargoOverload
 """
-2
 class LowFuelError(Exception):
     pass
 

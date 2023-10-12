@@ -2,7 +2,7 @@
 create dataclass `Engine`
 """
 from dataclasses import dataclass
-@dataclasses
+@dataclass
 class Engine:
     volume: int
     pistons: int
