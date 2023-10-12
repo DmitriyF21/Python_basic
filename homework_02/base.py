@@ -32,4 +32,4 @@ class Vehicle:
 
 
 car1 = Vehicle(1500, 50, 10)
-print(car1)
+print(car1.started)
