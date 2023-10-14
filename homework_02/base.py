@@ -11,25 +11,26 @@ class Vehicle:
 
     def start(self):
         try:
-            if not self.started:
+            if not self.started: ### норм ли если у меня значение по умолчанию стоит false
                 if self.fuel > 0:
                     self.started = True
                 else:
                     raise LowFuelError
         except LowFuelError:
-            print('Топлива нет')
+            print('Недостаточно топлива для старта')
 
     def move(self, distance):
         try:
-            if self.started:
+            if self.started: ### допустим тут проверяется если машина стартанула, а started=false
                 fuel_need = distance * self.fuel_consumption
-                if self.fuel > fuel_need:
+                if self.fuel >= fuel_need:
                     self.fuel -= fuel_need
                 else:
                     raise NotEnoughFuel
         except NotEnoughFuel:
-            print('Нет топлива')
+            print('Топлива для данной дистанции не хватит')
 
 
 car1 = Vehicle(1500, 50, 10)
+car1.start()
 print(car1.started)
