@@ -1,36 +1,26 @@
-from homework_02.exceptions import LowFuelError, NotEnoughFuel
-from abc import ABC
-class Vehicle:
+"""
+создайте класс `Plane`, наследник `Vehicle`
+"""
+from homework_02.base import Vehicle
+from homework_02.exceptions import CargoOverload
+class Plane(Vehicle):
     pass
-    def __init__(self, weight=0, fuel=0, fuel_consumption=0):
-        self.weight = weight
-        self.started = False
-        self.fuel = fuel
-        self.fuel_consumption = fuel_consumption
+    def __init__(self, cargo, max_cargo, weight=None,  fuel=None, fuel_consumption=None):
+        super().__init__(weight, fuel, fuel_consumption)
+        self.cargo = cargo
+        self.max_cargo = max_cargo
+
+    def load_cargo(self, spec_num):
+        expected = spec_num + self.cargo
+        if self.max_cargo > expected:
+            self.cargo = expected
+        else:
+            raise CargoOverload
 
 
-    def start(self):
-        try:
-            if not self.started: ### норм ли если у меня значение по умолчанию стоит false
-                if self.fuel > 0:
-                    self.started = True
-                else:
-                    raise LowFuelError
-        except LowFuelError:
-            print('Недостаточно топлива для старта')
-
-    def move(self, distance):
-        try:
-            if self.started: ### допустим тут проверяется если машина стартанула, а started=false
-                fuel_need = distance * self.fuel_consumption
-                if self.fuel >= fuel_need:
-                    self.fuel -= fuel_need
-                else:
-                    raise NotEnoughFuel
-        except NotEnoughFuel:
-            print('Топлива для данной дистанции не хватит')
 
 
-car1 = Vehicle(1500, 50, 10)
-car1.start()
-print(car1.started)
+    def remove_all_cargo(self):
+        prev_cargo = self.cargo
+        self.cargo = 0
+        return prev_cargo
