@@ -15,7 +15,7 @@ class Plane(Vehicle):
         if self.max_cargo > expected:
             self.cargo = expected
         else:
-            raise CargoOverload
+            raise CargoOverload('Перегруз')
 
 
 
