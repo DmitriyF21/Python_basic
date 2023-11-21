@@ -1,16 +1,22 @@
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
 
-class Cat():
-    def __init__(self,breed,color,age):
-        self.breed=breed
-        self.color=color
-        self.age=age
+from fastapi import FastAPI
 
-    def meow(self):
-        print('Мяу')
+Db_url = 'sqlite:///./sql_apps.db'
 
-    def purr(self):
-        print('Мрр')
-cat1=Cat('Шотландская','Серая','3')
+engine = create_engine(Db_url,connect_args={"check_same_thread": False})
 
-cat1.breed='Сиамская'
-print(cat1.breed)
+Base = declarative_base()
+
+class Person(Base):
+    __tablename__ = "People"
+    id = Column(Integer,primary_key=True, index=True)
+    name = Column (String)
+    age = Column(Integer)
+
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI()

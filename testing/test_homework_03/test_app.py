@@ -6,7 +6,6 @@ import requests
 import pytest
 from faker import Faker
 
-
 current_file = Path(__file__).resolve()
 folder_test_homework_0X = current_file.parent
 homework_0X = folder_test_homework_0X.name.replace("test_", "")
@@ -16,9 +15,7 @@ dockerfile_path = homework_0X_path / "Dockerfile"
 if not (dockerfile_path.is_file() and len(dockerfile_path.read_text().splitlines()) > 5):
     pytestmark = pytest.mark.skip("Dockerfile is not ready")
 
-
 fake = Faker()
-
 
 PORT = 8000
 LOCAL_PORT = 12345
