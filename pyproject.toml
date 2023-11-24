@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "python-basic"
+version = "0.1.0"
+description = ""
+authors = ["Dmitry"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.104.0"
+uvicorn = "^0.23.2"
+pytest = "^7.4.3"
+pytest-asyncio = "^0.21.1"
+sqlalchemy = "^2.0.23"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

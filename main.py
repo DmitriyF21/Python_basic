@@ -1,15 +1,22 @@
-class User:
-    def __init__(self, name, age, skill, access):
-        self.name = name
-        self._age = age
-        self.skill=skill
-        self.access=access
-    @property
-    def age(self):
-        return self._age
-    @age.setter
-    def age(self, val):
-        self._age = val
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
 
-c=User(name='Дмитрий', age=22, skill='middle', access='rwx')
-print(c.skill)
+from fastapi import FastAPI
+
+Db_url = 'sqlite:///./sql_apps.db'
+
+engine = create_engine(Db_url,connect_args={"check_same_thread": False})
+
+Base = declarative_base()
+
+class Person(Base):
+    __tablename__ = "People"
+    id = Column(Integer,primary_key=True, index=True)
+    name = Column (String)
+    age = Column(Integer)
+
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI()

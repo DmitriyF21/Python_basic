@@ -6,7 +6,6 @@ import requests
 import pytest
 from faker import Faker
 
-
 current_file = Path(__file__).resolve()
 folder_test_homework_0X = current_file.parent
 homework_0X = folder_test_homework_0X.name.replace("test_", "")
@@ -16,9 +15,7 @@ dockerfile_path = homework_0X_path / "Dockerfile"
 if not (dockerfile_path.is_file() and len(dockerfile_path.read_text().splitlines()) > 5):
     pytestmark = pytest.mark.skip("Dockerfile is not ready")
 
-
 fake = Faker()
-
 
 PORT = 8000
 LOCAL_PORT = 12345
@@ -55,7 +52,7 @@ def run_image(docker_client, build_image):
     container: Container = docker_client.containers.run(build_image, detach=True, ports={PORT: LOCAL_PORT})
     print("running docker container detached")
     # give some time to for the web app to start
-    sleep(1)
+    sleep(3)
     yield container
     print("stopping docker container")
     container.stop()
