@@ -52,7 +52,7 @@ def run_image(docker_client, build_image):
     container: Container = docker_client.containers.run(build_image, detach=True, ports={PORT: LOCAL_PORT})
     print("running docker container detached")
     # give some time to for the web app to start
-    sleep(15)
+    sleep(3)
     yield container
     print("stopping docker container")
     container.stop()
