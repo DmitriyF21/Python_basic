@@ -14,7 +14,7 @@
 """
 import asyncio
 from jsonplaceholder_requests import USERS_DATA_URL, POSTS_DATA_URL, fetch_json
-from models import engine, Base, Session, User, Post
+from models import engine, Base, Session, User, Post, connect_db
 
 
 async def create_db_tables():
@@ -44,6 +44,7 @@ async def save_post_in_db(p_data):
 
 
 async def async_main():
+    await connect_db()
     await create_db_tables()
     user_data, post_data = await asyncio.gather(fetch_json(USERS_DATA_URL), fetch_json(POSTS_DATA_URL))
     await save_user_in_db(user_data)
