@@ -11,6 +11,8 @@ import datetime
 import os
 import asyncpg
 import asyncio
+
+from sqlalchemy.dialects.postgresql import psycopg2
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import (
@@ -20,8 +22,7 @@ Column,
 DateTime,
 ForeignKey)
 
-PG_CONN_URI = os.environ.get("SQLALCHEMY_PG_CONN_URI") or "postgresql://postgres:password@localhost/postgres"
-
+PG_CONN_URI = "postgresql+asyncpg://user:password@localhost/postgres"
 engine = create_async_engine(PG_CONN_URI, echo=False)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
