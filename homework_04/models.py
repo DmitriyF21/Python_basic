@@ -21,7 +21,8 @@ Column,
 DateTime,
 ForeignKey)
 
-PG_CONN_URI = "postgresql+asyncpg://user:password@localhost/postgres"
+
+PG_CONN_URI = 'postgresql+asyncpg://user:password@localhost/postgres'
 engine = create_async_engine(PG_CONN_URI, echo=False)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
@@ -32,7 +33,7 @@ Session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=
 
 
 async def connect_db():
-    conn = await asyncpg.connect(PG_CONN_URI)
+    conn = await engine.connect()
     return conn
 
 
