@@ -8,7 +8,6 @@
 создайте связи relationship между моделями: User.posts и Post.user
 """
 import datetime
-import asyncpg
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import (
@@ -37,12 +36,6 @@ async def connect_db():
 async def get_db() -> AsyncSession:
     async with Session() as session:
         yield session
-
-
-async def created_db_tables():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
 
 
 class User(Base):
