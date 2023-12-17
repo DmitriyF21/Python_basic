@@ -8,10 +8,7 @@
 создайте связи relationship между моделями: User.posts и Post.user
 """
 import datetime
-import os
 import asyncpg
-import asyncio
-
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import (
@@ -22,7 +19,7 @@ DateTime,
 ForeignKey)
 
 
-PG_CONN_URI = 'postgresql+asyncpg://user:password@localhost/postgres'
+PG_CONN_URI = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
 engine = create_async_engine(PG_CONN_URI, echo=False)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
@@ -79,3 +76,23 @@ class Post(Base):
 
     def __repr__(self):
         return str(self)
+
+
+async def save_user_in_db(u_data):
+    async with Session as session:
+        async with session.begin():
+            for user in u_data:
+                name = user['name']
+                email = user ['email']
+                user = User(name=name, email=email)
+                session.add(user)
+
+
+async def save_post_in_db(p_data):
+    async with Session as session:
+        async with session.begin():
+            for post in p_data:
+                title = post['title']
+                description = post['description']
+                post = Post(title=title, description=description)
+                session.add(post)

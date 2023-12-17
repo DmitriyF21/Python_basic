@@ -13,34 +13,10 @@
 - закрытие соединения с БД
 """
 import asyncio
+
+from homework_04.models import save_user_in_db, save_post_in_db, connect_db
+from homework_06.main import create_db_tables
 from jsonplaceholder_requests import USERS_DATA_URL, POSTS_DATA_URL, fetch_json
-from models import engine, Base, Session, User, Post, connect_db
-
-
-async def create_db_tables():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.drop_all)
-
-
-async def save_user_in_db(u_data):
-    async with Session as session:
-        async with session.begin():
-            for user in u_data:
-                name = user['name']
-                email = user ['email']
-                user = User(name=name, email=email)
-                session.add(user)
-
-
-async def save_post_in_db(p_data):
-    async with Session as session:
-        async with session.begin():
-            for post in p_data:
-                title = post['title']
-                description = post['description']
-                post = Post(title=title, description=description)
-                session.add(post)
 
 
 async def async_main():
