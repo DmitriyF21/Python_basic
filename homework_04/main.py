@@ -14,8 +14,7 @@
 """
 import asyncio
 
-from homework_04.models import save_user_in_db, save_post_in_db, connect_db
-from homework_06.main import create_db_tables
+from homework_04.models import save_user_in_db, save_post_in_db, connect_db, engine, Base
 from jsonplaceholder_requests import USERS_DATA_URL, POSTS_DATA_URL, fetch_json
 
 
@@ -33,3 +32,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+async def create_db_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.drop_all)
