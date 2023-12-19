@@ -20,7 +20,7 @@ ForeignKey)
 
 SQLALCHEMY_PG_CONN_URI = 'postgresql+asyncpg://user:example@localhost:5432/blog'
 
-engine = create_async_engine(SQLALCHEMY_PG_CONN_URI, echo=False)
+engine = create_async_engine(SQLALCHEMY_PG_CONN_URI, echo=True)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
 Base = declarative_base()
