@@ -18,7 +18,7 @@ DateTime,
 ForeignKey)
 
 
-SQLALCHEMY_PG_CONN_URI = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
+SQLALCHEMY_PG_CONN_URI = 'postgresql+asyncpg://user:example@localhost:5432/blog'
 
 engine = create_async_engine(SQLALCHEMY_PG_CONN_URI, echo=False)
 
