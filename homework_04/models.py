@@ -18,8 +18,9 @@ DateTime,
 ForeignKey)
 
 
-PG_CONN_URI = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
-engine = create_async_engine(PG_CONN_URI, echo=False)
+SQLALCHEMY_PG_CONN_URI = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
+
+engine = create_async_engine(SQLALCHEMY_PG_CONN_URI, echo=False)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
 Base = declarative_base()
