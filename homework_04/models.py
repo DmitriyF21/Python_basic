@@ -1,26 +1,18 @@
-"""
-создайте алхимичный engine
-добавьте declarative base (свяжите с engine)
-создайте объект Session
-добавьте модели User и Post, объявите поля:
-для модели User обязательными являются name, username, email
-для модели Post обязательными являются user_id, title, body
-создайте связи relationship между моделями: User.posts и Post.user
-"""
 import datetime
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import (
 Integer,
 String,
 Column,
 DateTime,
 ForeignKey)
+# импортируем асинхронные методы sqlalchemy для работы с БД
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+# импортируем метод работы с бд, фабрику сессий и связи
+from sqlalchemy.orm import declarative_base, relationship
 
+SQLALCHEMY_PG_ASYNC_CONN_URI = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
 
-SQLALCHEMY_PG_CONN_URI = 'postgresql+asyncpg://user:example@localhost:5432/blog'
-
-engine = create_async_engine(SQLALCHEMY_PG_CONN_URI, echo=True)
+engine = create_async_engine(SQLALCHEMY_PG_ASYNC_CONN_URI, echo=True)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
 Base = declarative_base()
