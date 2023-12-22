@@ -1,4 +1,6 @@
 import datetime
+import os
+
 from sqlalchemy import (
 Integer,
 String,
@@ -10,9 +12,9 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sess
 # импортируем метод работы с бд, фабрику сессий и связи
 from sqlalchemy.orm import declarative_base, relationship
 
-SQLALCHEMY_PG_ASYNC_CONN_URI = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
-
-engine = create_async_engine(SQLALCHEMY_PG_ASYNC_CONN_URI, echo=True)
+DB_URL = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
+PG_CONN_URI = (os.environ.get("SQLALCHEMY_PG_CONN_URI") or DB_URL)
+engine = create_async_engine(PG_CONN_URI, echo=True)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
 Base = declarative_base()
