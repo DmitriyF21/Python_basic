@@ -31,7 +31,7 @@ class User(Base):
     email = Column (String, nullable=False, default='')
     stime = Column (DateTime,nullable=False, default=datetime.UTC)
 
-    posts = relationship('Post',back_populates='user')
+    post = relationship('Post',back_populates='user')
 
     def __str__(self):
         return f'{self.__classname__.name}(id{self.id},name{self.name!r},email{self.email!r},stime{self.stime!r})'
