@@ -71,7 +71,8 @@ async def save_post_in_db(p_data):
             for post in p_data:
                 title = post['title']
                 description = post['body']
-                post = Post(title=title, description=description)
+                user_id = post['userId']
+                post = Post(title=title, description=description,user_id=user_id)
                 session.add(post)
 
 
