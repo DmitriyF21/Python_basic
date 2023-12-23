@@ -23,16 +23,6 @@ Base = declarative_base()
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
-async def connect_db():
-    async with engine.connect() as conn:
-        return conn
-
-
-async def get_db() -> AsyncSession:
-    async with Session() as session:
-        yield session
-
-
 class User(Base):
     __tablename__ = 'user'
 
