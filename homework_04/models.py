@@ -44,7 +44,7 @@ class Post(Base):
     __tablename__ = 'post'
     post_id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False, default='')
-    body = Column(String,nullable=False, default='')
+    description = Column(String,nullable=False, default='')
 
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship('User', back_populates='post')
@@ -71,7 +71,7 @@ async def save_post_in_db(p_data):
         async with session.begin():
             for post in p_data:
                 title = post['title']
-                description = post['description']
+                description = post['body']
                 post = Post(title=title, description=description)
                 session.add(post)
 
