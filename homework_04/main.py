@@ -19,19 +19,13 @@ from jsonplaceholder_requests import USERS_DATA_URL, POSTS_DATA_URL, fetch_json
 
 
 async def async_main():
-    await connect_db()
     await create_db_tables()
     user_data, post_data = await asyncio.gather(fetch_json(USERS_DATA_URL), fetch_json(POSTS_DATA_URL))
-    await save_user_in_db(user_data)
-    await save_post_in_db(post_data)
+    await asyncio.gather(save_user_in_db(user_data), save_post_in_db(post_data))
 
 
-def main():
+if __name__ == "main":
     asyncio.run(async_main())
-
-
-if __name__ == "__main__":
-    main()
 
 
 async def create_db_tables():

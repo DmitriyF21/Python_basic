@@ -10,22 +10,22 @@ ForeignKey)
 # импортируем асинхронные методы sqlalchemy для работы с БД
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 # импортируем метод работы с бд, фабрику сессий и связи
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 DB_URL = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
 PG_CONN_URI = (os.environ.get("SQLALCHEMY_PG_CONN_URI") or DB_URL)
-engine = create_async_engine(PG_CONN_URI, echo=True,poolclass=NullPool)
+engine = create_async_engine(PG_CONN_URI, echo=True, poolclass=NullPool)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
 Base = declarative_base()
 
 
-Session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
+async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
 async def connect_db():
-    conn = await engine.connect()
-    return conn
+    async with engine.connect() as conn:
+        return conn
 
 
 async def get_db() -> AsyncSession:
@@ -67,7 +67,7 @@ class Post(Base):
 
 
 async def save_user_in_db(u_data):
-    async with Session() as session:
+    async with async_session() as session:
         async with session.begin():
             for user in u_data:
                 name = user['name']
@@ -77,7 +77,7 @@ async def save_user_in_db(u_data):
 
 
 async def save_post_in_db(p_data):
-    async with Session() as session:
+    async with async_session() as session:
         async with session.begin():
             for post in p_data:
                 title = post['title']
