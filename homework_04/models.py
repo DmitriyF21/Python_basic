@@ -27,8 +27,9 @@ class User(Base):
     __tablename__ = 'user'
 
     id = Column(Integer,primary_key=True)
-    name = Column (String, nullable=False, default='')
-    email = Column (String, nullable=False, default='')
+    name = Column(String, nullable=False, default='')
+    email = Column(String, nullable=False, default='')
+    username = Column(String, nullable=False, default='')
 
     posts = relationship('Post',back_populates='user')
 
@@ -43,7 +44,7 @@ class Post(Base):
     __tablename__ = 'post'
     post_id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False, default='')
-    description = Column(String,nullable=False, default='')
+    body = Column(String,nullable=False, default='')
 
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     user = relationship('User', back_populates='posts')
@@ -61,7 +62,8 @@ async def save_user_in_db(u_data):
             for user in u_data:
                 name = user['name']
                 email = user ['email']
-                user = User(name=name, email=email)
+                username = user ['username']
+                user = User(name=name, email=email, username=username)
                 session.add(user)
 
 
@@ -70,9 +72,9 @@ async def save_post_in_db(p_data):
         async with session.begin():
             for post in p_data:
                 title = post['title']
-                description = post['body']
+                body = post['body']
                 user_id = post['userId']
-                post = Post(title=title, description=description,user_id=user_id)
+                post = Post(title=title, body=body,user_id=user_id)
                 session.add(post)
 
 
