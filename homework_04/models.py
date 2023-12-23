@@ -67,7 +67,7 @@ class Post(Base):
 
 
 async def save_user_in_db(u_data):
-    async with Session as session:
+    async with Session() as session:
         async with session.begin():
             for user in u_data:
                 name = user['name']
@@ -77,7 +77,7 @@ async def save_user_in_db(u_data):
 
 
 async def save_post_in_db(p_data):
-    async with Session as session:
+    async with Session() as session:
         async with session.begin():
             for post in p_data:
                 title = post['title']
