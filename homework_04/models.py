@@ -30,10 +30,10 @@ class User(Base):
     name = Column (String, nullable=False, default='')
     email = Column (String, nullable=False, default='')
 
-    post = relationship('Post',back_populates='user')
+    posts = relationship('Post',back_populates='user')
 
     def __str__(self):
-        return f'{self.__classname__.name}(id{self.id},name{self.name!r},email{self.email!r},stime{self.stime!r})'
+        return f'{self.__classname__.name}(id{self.id},name{self.name!r},email{self.email!r})'
 
     def __repr__(self):
         return str(self)
