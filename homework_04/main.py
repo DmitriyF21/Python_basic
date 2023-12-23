@@ -14,7 +14,7 @@
 """
 import asyncio
 
-from homework_04.models import save_user_in_db, save_post_in_db, connect_db, engine, Base
+from homework_04.models import save_user_in_db, save_post_in_db, engine, Base
 from jsonplaceholder_requests import USERS_DATA_URL, POSTS_DATA_URL, fetch_json
 
 
