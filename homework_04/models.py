@@ -42,7 +42,7 @@ class User(Base):
 
 class Post(Base):
     __tablename__ = 'post'
-    post_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False, default='')
     body = Column(String,nullable=False, default='')
 
