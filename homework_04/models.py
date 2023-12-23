@@ -29,7 +29,6 @@ class User(Base):
     id = Column(Integer,primary_key=True)
     name = Column (String, nullable=False, default='')
     email = Column (String, nullable=False, default='')
-    stime = Column (DateTime,nullable=False, default=datetime.UTC)
 
     post = relationship('Post',back_populates='user')
 
