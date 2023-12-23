@@ -1,6 +1,6 @@
 import datetime
 import os
-
+from sqlalchemy.pool import NullPool
 from sqlalchemy import (
 Integer,
 String,
@@ -14,7 +14,7 @@ from sqlalchemy.orm import declarative_base, relationship
 
 DB_URL = 'postgresql+asyncpg://user:password@localhost:5432/postgres'
 PG_CONN_URI = (os.environ.get("SQLALCHEMY_PG_CONN_URI") or DB_URL)
-engine = create_async_engine(PG_CONN_URI, echo=True)
+engine = create_async_engine(PG_CONN_URI, echo=True,poolclass=NullPool)
 
 # создаем метод описания БД (Создаем базовый класс для декларативных определений классов.)
 Base = declarative_base()
