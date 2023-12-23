@@ -47,7 +47,7 @@ class Post(Base):
     body = Column(String,nullable=False, default='')
 
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    users = relationship('User', back_populates='post')
+    user = relationship('User', back_populates='post')
 
     def __str__(self):
         return f'{self.__class__.name}(id={self.id},title = {self.title}, body = {self.body}'
@@ -74,3 +74,8 @@ async def save_post_in_db(p_data):
                 description = post['description']
                 post = Post(title=title, description=description)
                 session.add(post)
+
+
+async def create_db_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
