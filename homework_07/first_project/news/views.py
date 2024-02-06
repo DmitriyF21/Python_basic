@@ -1,17 +1,56 @@
 from datetime import datetime
 
-from django.shortcuts import render
+from django.contrib.auth import logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import render, redirect
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseForbidden, HttpResponseBadRequest,
                          HttpResponseNotFound)
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView, FormView
 
-from .forms import UserForm
+from .forms import UserForm, ContactForm, LoginForm, SignUpForm
 from .models import News, Category
 # Create your views here.
 from django.views import View
 
 
+class ContactView(FormView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = 'contact/'
+
+    def form_valid(self, form):
+        form.send_email()
+        return super().form_valid(form)
+
+
+#Registaration
+def registration(request):
+    if request.method == 'GET':
+        form = SignUpForm()
+        return render(request, 'registration/registration.html', { 'form': form})
+
+
+class LoginUser(LoginView):
+    form_class = LoginForm
+    template_name = "registration/login.html"
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        login = form.cleaned_data.get('login')
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=login, password=password)
+        return redirect('/')
+
+
+class MainLogoutView(LogoutView):
+    """Представление, для выхода из логина"""
+    next_page = reverse_lazy('home')
+
+
+
+## CRUD
 class NewView(TemplateView):
     template_name = "home.html"
     model = News
@@ -24,6 +63,19 @@ def create_news():
         Category.objects.create(category="War")
 
 
+class NewsGet(ListView):
+    model = News
+    context_object_name = "news_list"
+
+  #  queryset = News.objects.filter(title__icontains='Ди')
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context ['categories'] = Category.objects.all()
+        return context
+
+
 class NewsCreate(CreateView):
     create_news()
     model = News
@@ -32,22 +84,12 @@ class NewsCreate(CreateView):
     success_url = '/'
 
 
-class NewsGet(ListView):
-    model = News
-    context_object_name = "News_list"
-  #  queryset = News.objects.filter(title__icontains='Ди')
-
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context ['some_var'] = 'some variables'
-        return context
-
-
 class UpdateNews(UpdateView):
     model = News
     fields = ('title', 'description',"category")
+    template_name = 'news/news_update.html'
     success_url = '/'
+
 
 
 class DeleteNews(DeleteView):
@@ -59,3 +101,4 @@ class DeleteNews(DeleteView):
 class NewsDetail(DetailView):
     model = News
 
+## CRUD

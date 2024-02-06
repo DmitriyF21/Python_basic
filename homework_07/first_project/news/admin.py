@@ -3,8 +3,16 @@ from .models import News, Category
 
 
 # Register your models here.
-admin.site.register(Category)
-admin.site.register(News)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['category']
+
+
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ['title','description']
+
+
 
 
 
