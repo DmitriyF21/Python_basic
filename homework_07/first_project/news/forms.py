@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.views.generic import FormView
 
-from .models import  News
+from .models import News, Comment
 from django.forms import ModelForm
 
 
@@ -27,20 +27,23 @@ class NewsForm(forms.ModelForm):
         fields = ('title', 'category')
 
 
-class LoginForm(AuthenticationForm):
-    login = forms.CharField()
-    password = forms.CharField(widget= forms.PasswordInput)
-
-    class Meta:
-        fields = ['username','password']
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=65)
+    password = forms.CharField(max_length=65, widget=forms.PasswordInput)
 
 
 class SignUpForm(UserCreationForm):
-    username = forms.CharField(label='Имя пользователя',widget=forms.TextInput(attrs={'class':'form-control'}))
-    password1 = forms.CharField(label='Пароль', widget=forms.TextInput(attrs={'class':'form-control'}))
-    password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput(attrs={'class':'form-control'}))
-
     class Meta:
         model = User
         fields = ['username','password1','password2']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model= Comment
+        fields = ['comment']
+
+
+class SearchForm(forms.Form):
+    title = forms.CharField(max_length=200)
 

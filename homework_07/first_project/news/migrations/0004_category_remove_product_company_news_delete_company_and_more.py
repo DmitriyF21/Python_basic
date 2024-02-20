@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=50)),
                 ('description', models.CharField(max_length=100)),
-                ('image', models.ImageField(blank=True, upload_to='images/')),
+                ('image', models.ImageField(blank=True, upload_to='img/')),
                 ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='news.category')),
             ],
             options={
